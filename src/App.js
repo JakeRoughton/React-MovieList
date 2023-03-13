@@ -7,6 +7,8 @@ import NavLayout from "./Layouts/NavLayout";
 import HomePage from "./Pages/HomePage";
 import MoviePage from "./Pages/MoviePage";
 import MovieLayout from "./Layouts/MovieLayout";
+import MoviesListing from "./Pages/MoviesListing";
+import MovieAdd from "./Pages/MovieAdd";
 //Import Data Set
 import movies from "./MovieData/Movies";
 
@@ -23,35 +25,36 @@ const App = () => {
   }
  
   //Stucture Router to define pages and children
-  const router = createBrowserRouter(
-    [
-      {
-        path: "/",
-        element: <NavLayout />,
-        children: [
-          {
-            element: <HomePage />,
-            index: true,
-          },
-          {
-            path: "/",
-            element: <MovieLayout movieList={movieList} />,
-            children:[
-              {
-                element: <MoviePage movies={movieList} />,
-                index: true,
-              },
-              {
-                element: <MoviePage movieList={movieList} />,
-                path: ":index",
-              },
-
-            ],
-          },
-        ],
-      },
-    ]
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <NavLayout />,
+      children: [
+        {
+          element: <HomePage />,
+          index: true,
+        },
+        {
+          path: "/movies",
+          element: <MovieLayout data={movieList} />,
+          children: [
+            {
+              element: <MoviesListing data={movieList} />,
+              index: true,
+            },
+            {
+              element: <MovieAdd handleAddMovie={handleAddMovie} />,
+              path: "/Pages/MovieAdd",
+            },
+            {
+              element: <MoviePage data={movieList} />,
+              path: ":index",
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
   //Return the page routing
 return (
